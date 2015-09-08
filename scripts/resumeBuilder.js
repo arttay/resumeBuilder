@@ -60,12 +60,14 @@ var obj = {
 					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, item2.value);
 					if (len === parseInt(k)) {
 						var mapKey = this.mapClass()[key]
-						var tmpl = this.findTemplate(mapKey);
-						this.renderTmpl(mapKey, tmpl);
+						var tmplName = this.findTemplate(mapKey);
+						this.renderTmpl(mapKey, tmplName, tmpl);
 					}	
 				}
 			}
 		}
+		this.renderTmpl("aboutTmpl", "baseTmpl", tmplObj["aboutTmpl"]);
+		this.builderIo(tmplObj["baseTmpl"]);
 	},
 	processItems: function (attr) {
 		var str = "";
@@ -80,16 +82,22 @@ var obj = {
 			item: "<div><span class='property'>{itemName}</span>: {itemValue}</div>"
 		}
 	},
-	renderTmpl: function (key, tmpl) {
-		key = "{" + key + "}";
+	renderTmpl: function (key, tmplName, tmpl) {
+		key = "\{" + key + "\}";
 		var re = new RegExp(key,"g");
-		console.log(re);
-
-		tmplObj[tmpl].replace(re, "foo");
-		//console.log(tmplObj[tmpl]);
+		tmplObj[tmplName] = tmplObj[tmplName].replace(re, tmpl);
 	},
-	builderIo: function () {
+	builderIo: function (tmpl) {
+		var styleNewPath = path.join(__dirname, "..", "build/base.css");
+		var styleOldPath = path.join(__dirname, "..", "styles/base.css");
 
+		fs.writeFile("./build/index.html", tmpl, function(err) {
+		    if(err) {
+		        return console.log(err);
+		    }
+		    console.log("The file was saved!");
+		});
+		fs.renameSync(styleOldPath, styleNewPath);
 	}
 };
 
