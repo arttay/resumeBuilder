@@ -56,8 +56,14 @@ var obj = {
 			for (var k in item.value) {
 				var item2 = item.value[k];
 				if (item2.value instanceof Array) {
+					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.processItems(item2.value)).replace(/\{className\}/, this.checkPropClass(item2));
+					if (len === parseInt(k)) {
+						var mapKey = this.mapClass()[key]
+						var tmplName = this.findTemplate(mapKey);
+						this.renderTmpl(mapKey, tmplName, tmpl);
+					}
 				} else {
-					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, item2.value);
+					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.checkProps(item2)).replace(/\{className\}/, this.checkPropClass(item2));
 					if (len === parseInt(k)) {
 						var mapKey = this.mapClass()[key]
 						var tmplName = this.findTemplate(mapKey);
@@ -69,6 +75,7 @@ var obj = {
 		this.renderTmpl("aboutTmpl", "baseTmpl", tmplObj["aboutTmpl"]);
 		this.builderIo(tmplObj["baseTmpl"]);
 	},
+
 	processItems: function (attr) {
 		var str = "";
 		var len = attr.length - 1;
@@ -77,9 +84,29 @@ var obj = {
 		});
 		return str;
 	},
+
+	checkProps: function (item) {
+		if (item.hasOwnProperty('url')) {
+			return this.checkSpecialProp(item);
+		} else {
+			return item.value;
+		}
+	},
+
+	checkPropClass: function (item) {
+		return item.hasOwnProperty("className") ? item.className : "";
+	},
+	checkSpecialProp: function (item) {
+		var tmpl = "";
+		if (item.hasOwnProperty('url')) {
+			tmpl += this.templates().url.replace(/\{urlLink\}/g, item.url).replace(/\{urlText\}/g, item.linkText || item.url);
+		}
+		return tmpl;
+	},
 	templates: function () {
 		return {
-			item: "<div><span class='property'>{itemName}</span>: {itemValue}</div>"
+			item: "<div class='{className}'><span class='property'>{itemName}</span>: {itemValue}</div>",
+			url: "<a href='{urlLink}'><span class='colorWhite'>url(</span><span class='propertyLink'>&nbsp;{urlText}&nbsp;</span><span class='colorWhite'>)</span></a>"
 		}
 	},
 	renderTmpl: function (key, tmplName, tmpl) {
@@ -97,7 +124,7 @@ var obj = {
 		    }
 		    console.log("The file was saved!");
 		});
-		fs.renameSync(styleOldPath, styleNewPath);
+		fs.createReadStream(styleOldPath).pipe(fs.createWriteStream(styleNewPath));
 	}
 };
 

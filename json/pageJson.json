@@ -3,10 +3,12 @@
 			"displayName": "about",
 			"value": [{
 				"displayName": "Name",
-				"value": "Art Taylor"
+				"value": "Art Taylor",
+				"className": "displayBlock firstLayer"
 			}, {
 				"displayName": "What_I_Do",
-				"value": "Front-End Web Developer"
+				"value": "Front-End Web Developer",
+				"className": "displayBlock firstLayer"
 			}]
 		},
 		"skills_About": {
@@ -14,50 +16,59 @@
 			"value": [{
 				"displayName": "Languages",
 				"value": ["CSS3", "HTML5", "Javascript", "PHP"],
-				"className": "variable"
+				"className": "languages displayBlock indent"
 			}, {
 				"displayName": "Javascript Libraries",
 				"value": ["jQuery", "jQuery UI", "RequireJs", "Mustache.js", "Handlebars.js", "Backbone", "Angular", "NodeJS"],
-				"className": "variable"
+				"className": "jsLib displayBlock indent"
 			}, {
 				"displayName": "Node Modules",
 				"value": ["Express", "Grunt", "Gulp", "Socket.io", "Q", "Bower", "Yeoman", "Jshint", "Mocha", "Chai", "Sinon", "FS"],
-				"className": "variable"
+				"className": "displayBlock indent"
 			}, {
 				"displayName": "Software",
 				"value": ["SASS", "GIT", "Photoshop"],
-				"className": "variable"
+				"className": "software displayBlock indent"
 			}, {
 				"displayName": "CMS",
 				"value": ["Wordpress", "Drupal", "Joomla"],
-				"className": "variable"
+				"className": "cms displayBlock indent"
 			}, {
 				"displayName": "Design",
 				"value": ["OOCSS", "DRYCSS", "Responsive Design"],
-				"className": "variable"
+				"className": "design displayBlock indent"
 			}, {
 				"displayName": "Database",
 				"value": ["MySQL", "SQL", "MongoDB", "Access"],
-				"className": "variable"
+				"className": "design displayBlock indent"
 			}]
 		},
 		"contact_About": {
 			"displayName": "contact",
 			"value": [{
 				"displayName": "Email",
-				"value": "arttay1090@gmail.com"
+				"value": "arttay1090@gmail.com",
+				"className": "email displayBlock indent"
 			}, {
 				"displayName": "Website",
-				"value": "url(http://art-taylor.net/public)"
+				"value": "url(http://art-taylor.net/public)",
+				"className": "website displayBlock indent",
+				"url": "http://art-taylor.net/public"
 			}, {
 				"displayName": "Github",
-				"value": "url(https://github.com/arttay)"
+				"value": "url(https://github.com/arttay)",
+				"className": "github displayBlock indent",
+				"url": "https://github.com/arttay"
 			}, {
 				"displayName": "Phone",
-				"value": "(612)280-6094"
+				"value": "(612)280-6094",
+				"className": "phone displayBlock indent"
 			}, {
 				"displayName": "Twitter",
-				"value": "@arttaylor09"
+				"value": "@arttaylor09",
+				"className": "twitter displayBlock indent",
+				"url": "https://twitter.com/arttaylor09",
+				"linkText": "@arttaylor09"
 			}]
 		}
 }
