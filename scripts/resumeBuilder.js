@@ -22,6 +22,7 @@ var obj = {
 		this.processAttrs(attrs);
 		this.tmpl = "";
 	},
+
 	mapClass: function () {
 		//todo: do I really need this?
 		return {
@@ -30,6 +31,7 @@ var obj = {
 			"contact_About": "aboutContact"
 		}
 	},
+
 	mapAttributes: function () {
 		return {
 			baseTmpl: ["one", "two"],
@@ -37,6 +39,7 @@ var obj = {
 			previousWorkTmpl: ["three", "four"]
 		}
 	},
+
 	findTemplate: function (prop) {
 		var attrs = this.mapAttributes();
 		for (var key in attrs) {
@@ -48,32 +51,58 @@ var obj = {
 			}
 		}
 	},
-	processAttrs: function (attr) { 
+
+	processAttrs: function (attr) {
 		for (var key in attr) {
-			var item 	= attr[key],
+			if (key === "previous_work") {
+				//console.log(attr[key]);
+				this.processWork(attr[key]);
+			} else {
+				var item 	= attr[key],
 				len 	= item.value.length - 1,
 				tmpl 	= "";
-			for (var k in item.value) {
-				var item2 = item.value[k];
-				if (item2.value instanceof Array) {
-					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.processItems(item2.value)).replace(/\{className\}/, this.checkPropClass(item2));
-					if (len === parseInt(k)) {
-						var mapKey = this.mapClass()[key]
-						var tmplName = this.findTemplate(mapKey);
-						this.renderTmpl(mapKey, tmplName, tmpl);
+				for (var k in item.value) {
+					var item2 = item.value[k];
+					if (item2.value instanceof Array) {
+						tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.processItems(item2.value)).replace(/\{className\}/, this.checkPropClass(item2));
+						if (len === parseInt(k)) {
+							var mapKey = this.mapClass()[key]
+							var tmplName = this.findTemplate(mapKey);
+							this.renderTmpl(mapKey, tmplName, tmpl);
+						}
+					} else {
+						tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.checkProps(item2)).replace(/\{className\}/, this.checkPropClass(item2));
+						if (len === parseInt(k)) {
+							var mapKey = this.mapClass()[key]
+							var tmplName = this.findTemplate(mapKey);
+							this.renderTmpl(mapKey, tmplName, tmpl);
+						}	
 					}
-				} else {
-					tmpl += this.templates().item.replace(/\{itemName\}/, item2.displayName).replace(/\{itemValue\}/, this.checkProps(item2)).replace(/\{className\}/, this.checkPropClass(item2));
-					if (len === parseInt(k)) {
-						var mapKey = this.mapClass()[key]
-						var tmplName = this.findTemplate(mapKey);
-						this.renderTmpl(mapKey, tmplName, tmpl);
-					}	
 				}
 			}
+			
 		}
 		this.renderTmpl("aboutTmpl", "baseTmpl", tmplObj["aboutTmpl"]);
 		this.builderIo(tmplObj["baseTmpl"]);
+	},
+
+	processWork: function (arr) {
+		var tmpl = "";
+		var self = this;
+		arr.forEach(function (item, key) {
+			//console.log(key, item);
+			for (var key in item) {
+				if(key === "to" || key === "from" || key === "title") {
+					tmpl += self.templates().previousSingleLine.replace(/\{key\}/, key).replace(/\{value\}/, item[key]);
+				}
+
+				if(Array.isArray(item[key])) {
+					console.log(item[key]);
+				}
+				
+			}
+			//tmpl += this.templates().
+		});
 	},
 
 	processItems: function (attr) {
@@ -96,6 +125,7 @@ var obj = {
 	checkPropClass: function (item) {
 		return item.hasOwnProperty("className") ? item.className : "";
 	},
+	
 	checkSpecialProp: function (item) {
 		var tmpl = "";
 		if (item.hasOwnProperty('url')) {
@@ -106,6 +136,8 @@ var obj = {
 	templates: function () {
 		return {
 			item: "<div class='{className}'><span class='property'>{itemName}</span>: {itemValue}</div>",
+			previousCompany: "<div class = 'indentTitle class'>.{companyName} <span class = 'colorWhite'>{</span></div>",
+			previousSingleLine: "<div class='displayBlock indent'><span class = 'property'>{key}</span>: &nbsp; {value};</div>",
 			url: "<a href='{urlLink}'><span class='colorWhite'>url(</span><span class='propertyLink'>&nbsp;{urlText}&nbsp;</span><span class='colorWhite'>)</span></a>"
 		}
 	},

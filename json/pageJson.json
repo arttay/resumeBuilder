@@ -70,5 +70,22 @@
 				"url": "https://twitter.com/arttaylor09",
 				"linkText": "@arttaylor09"
 			}]
-		}
+		},
+		"previous_work": [{
+			"from": "May, 2015",
+			"to": "Present",
+			"company": "Digital River",
+			"title": "Sr. UI Engineer",
+			"responsibilities": "foo",
+			"tech": ["jQuery", "javascript", "HTML5"],
+			"node": ["Grunt", "Gulp", "Express"]
+		}, {
+			"from": "July 2014",
+			"to": "May 2015",
+			"company": "digital river",
+			"title": "UI Engineer",
+			"responsibilities": "bar",
+			"tech": ["MongoDB", "Git", "RequireJS"],
+			"node": ["Yeoman", "path"]
+		}]
 }
