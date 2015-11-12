@@ -53,10 +53,14 @@ var obj = {
 	},
 
 	processAttrs: function (attr) {
+		var self = this;
 		for (var key in attr) {
+			//console.log(key);
 			if (key === "previous_work") {
 				//console.log(attr[key]);
-				this.processWork(attr[key]);
+				var previousWorkTmpl = this.processWork(attr[key]);
+				var  previousTmpl = self.renderTmpl("previousWork", "previousWorkTmpl", previousWorkTmpl);
+				//console.log(foo);
 			} else {
 				var item 	= attr[key],
 				len 	= item.value.length - 1,
@@ -79,10 +83,14 @@ var obj = {
 						}	
 					}
 				}
-			}
-			
+			}	
 		}
+		this.renderTmpl("previousWorkTmpl", "baseTmpl", previousTmpl)
 		this.renderTmpl("aboutTmpl", "baseTmpl", tmplObj["aboutTmpl"]);
+
+		var foo = this.renderTmpl("previousWorkTmpl", "baseTmpl", previousTmpl)
+		console.log(foo);
+
 		this.builderIo(tmplObj["baseTmpl"]);
 	},
 
@@ -92,17 +100,26 @@ var obj = {
 		arr.forEach(function (item, key) {
 			//console.log(key, item);
 			for (var key in item) {
+				if (key === "company") {
+					console.log(item[key]);
+					tmpl += self.templates().previousCompany.replace(/\{companyName\}/, item[key]);
+				}
 				if(key === "to" || key === "from" || key === "title") {
-					tmpl += self.templates().previousSingleLine.replace(/\{key\}/, key).replace(/\{value\}/, item[key]);
+					tmpl += self.templates().singleLineString.replace(/\{key\}/, key).replace(/\{value\}/, item[key]);
 				}
 
+				//console.log(typeof item[key]);
+
 				if(Array.isArray(item[key])) {
-					console.log(item[key]);
+					//console.log(item[key]);
 				}
 				
 			}
-			//tmpl += this.templates().
+			
+			tmpl += self.templates().endLine;
 		});
+		
+		return tmpl;
 	},
 
 	processItems: function (attr) {
@@ -136,8 +153,10 @@ var obj = {
 	templates: function () {
 		return {
 			item: "<div class='{className}'><span class='property'>{itemName}</span>: {itemValue}</div>",
+			endLine: "<div class='indentTitle'>}</div>",
 			previousCompany: "<div class = 'indentTitle class'>.{companyName} <span class = 'colorWhite'>{</span></div>",
 			previousSingleLine: "<div class='displayBlock indent'><span class = 'property'>{key}</span>: &nbsp; {value};</div>",
+			singleLineString: "<div class='displayBlock indent'><span class = 'property'>{key}</span>: &nbsp; <span class='string'>\"{value}\"</span>;</div>",
 			url: "<a href='{urlLink}'><span class='colorWhite'>url(</span><span class='propertyLink'>&nbsp;{urlText}&nbsp;</span><span class='colorWhite'>)</span></a>"
 		}
 	},
@@ -145,6 +164,7 @@ var obj = {
 		key = "\{" + key + "\}";
 		var re = new RegExp(key,"g");
 		tmplObj[tmplName] = tmplObj[tmplName].replace(re, tmpl);
+		return tmplObj[tmplName];
 	},
 	builderIo: function (tmpl) {
 		var styleNewPath = path.join(__dirname, "..", "build/base.css");

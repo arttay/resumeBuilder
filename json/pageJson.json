@@ -72,17 +72,17 @@
 			}]
 		},
 		"previous_work": [{
+			"company": "Digital River",
 			"from": "May, 2015",
 			"to": "Present",
-			"company": "Digital River",
 			"title": "Sr. UI Engineer",
 			"responsibilities": "foo",
 			"tech": ["jQuery", "javascript", "HTML5"],
 			"node": ["Grunt", "Gulp", "Express"]
 		}, {
+			"company": "Digital river",
 			"from": "July 2014",
 			"to": "May 2015",
-			"company": "digital river",
 			"title": "UI Engineer",
 			"responsibilities": "bar",
 			"tech": ["MongoDB", "Git", "RequireJS"],
