@@ -1,5 +1,24 @@
 html {
-background-color: #272822;
+	background-color: #272822;
+}
+
+
+
+.mediaObj .leftObj  {float:left; margin-right: 10px;}
+.mediaObj .rightObj {float:left; margin-left: 10px;}
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+
+.multiLine {
+	display: inline-block;
+	max-width: 900px;
 }
 .wrapper {
 	width: 1300px;
@@ -33,7 +52,7 @@ a {
 	display: block;
 }
 .indent {
-	text-indent: 5.5em;
+	margin-left: 6em;
 }
 .indentTitle {
 text-indent: 3.5em;

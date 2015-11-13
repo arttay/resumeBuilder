@@ -4,13 +4,6 @@ var path = require("path");
 var baseTmplPath = path.join(__dirname, "..", "templates/base.tmpl.html");
 var aboutTmplPath = path.join(__dirname, "..", "templates/about.tmpl.html");
 var previousWorkTmplPath = path.join(__dirname, "..", "templates/previousWork.tmpl.html");
-
-/*
-var baseTmpl = fs.readFileSync(baseTmplPath, "utf8");
-var aboutTmpl = fs.readFileSync(aboutTmplPath, "utf8");
-var previousWorkTmpl = fs.readFileSync(previousWorkTmplPath, "utf8");
-*/
-
 var tmplObj = {
 	baseTmpl: fs.readFileSync(baseTmplPath, "utf8"),
 	aboutTmpl: fs.readFileSync(aboutTmplPath, "utf8"),
@@ -55,16 +48,13 @@ var obj = {
 	processAttrs: function (attr) {
 		var self = this;
 		for (var key in attr) {
-			//console.log(key);
 			if (key === "previous_work") {
-				//console.log(attr[key]);
 				var previousWorkTmpl = this.processWork(attr[key]);
 				var  previousTmpl = self.renderTmpl("previousWork", "previousWorkTmpl", previousWorkTmpl);
-				//console.log(foo);
 			} else {
 				var item 	= attr[key],
-				len 	= item.value.length - 1,
-				tmpl 	= "";
+				len 		= item.value.length - 1,
+				tmpl 		= "";
 				for (var k in item.value) {
 					var item2 = item.value[k];
 					if (item2.value instanceof Array) {
@@ -104,8 +94,11 @@ var obj = {
 					console.log(item[key]);
 					tmpl += self.templates().previousCompany.replace(/\{companyName\}/, item[key]);
 				}
-				if(key === "to" || key === "from" || key === "title") {
+				if (key === "to" || key === "from" || key === "title") {
 					tmpl += self.templates().singleLineString.replace(/\{key\}/, key).replace(/\{value\}/, item[key]);
+				}
+				if (key === "responsibilities" || key === "accomplishments") {
+					tmpl += self.templates().multiLineString.replace(/\{key\}/, key).replace(/\{value\}/, item[key]);
 				}
 
 				//console.log(typeof item[key]);
@@ -157,6 +150,7 @@ var obj = {
 			previousCompany: "<div class = 'indentTitle class'>.{companyName} <span class = 'colorWhite'>{</span></div>",
 			previousSingleLine: "<div class='displayBlock indent'><span class = 'property'>{key}</span>: &nbsp; {value};</div>",
 			singleLineString: "<div class='displayBlock indent'><span class = 'property'>{key}</span>: &nbsp; <span class='string'>\"{value}\"</span>;</div>",
+			multiLineString: "<div class='displayBlock indent mediaObj clearfix'><span class = 'property leftObj'>{key}<span class='colorWhite'>:</span></span> &nbsp; <span class='string multiLine rightObj'>\"{value}\";</span></div>",
 			url: "<a href='{urlLink}'><span class='colorWhite'>url(</span><span class='propertyLink'>&nbsp;{urlText}&nbsp;</span><span class='colorWhite'>)</span></a>"
 		}
 	},

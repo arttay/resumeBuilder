@@ -76,7 +76,7 @@
 			"from": "May, 2015",
 			"to": "Present",
 			"title": "Sr. UI Engineer",
-			"responsibilities": "foo",
+			"responsibilities": "Lead Front End team in creating and extending existing dashboard and creation of new dashboards for internal Digital River teams",
 			"tech": ["jQuery", "javascript", "HTML5"],
 			"node": ["Grunt", "Gulp", "Express"]
 		}, {
@@ -84,7 +84,8 @@
 			"from": "July 2014",
 			"to": "May 2015",
 			"title": "UI Engineer",
-			"responsibilities": "bar",
+			"responsibilities": "Working on our new platform that encompass a new rendering engine and a website configuration tool. Art contributed to the core service library that underlays the entire project, including general services that manipulated data for consumption, an aggregation tier and a module that interacts with the Digital River API’s directly. Art has also contributed to the configuration tool, he created functionality that allows users to create custom themes, functionality for pagination and sorting for category pages and created the interface for admin users",
+			"accomplishments": "Created functionality for users to customize the look and feel of their web store, this included: selecting/saving new themes, customizing individual elements such as font and backgroundcolor, upload logos for desktop and mobile web and selecting fonts for different areas of the site. Wrote functionality for sorting and filtering items across search and category pages. Worked with designers to create the admin menu UI for the Forge tool",
 			"tech": ["MongoDB", "Git", "RequireJS"],
 			"node": ["Yeoman", "path"]
 		}]
